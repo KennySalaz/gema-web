@@ -178,7 +178,7 @@
 
       .home-information {
         padding-left: 1.5rem;
-        margin-top: 3rem;
+        margin-top: 1rem;
         border-left: 5px solid var(--white-color);
         z-index: var(--z-tooltip);
       }
@@ -237,7 +237,7 @@
 
       .home-img {
         position: absolute;
-        right: 19%;
+        right: 20%;
         bottom: 22px;
         width: 50%;
         z-index: var(--z-normal);
@@ -286,6 +286,12 @@
         left: 66.6%;
       }
 
+      @media screen and (max-width: 1200px) {
+        .home-img {
+          right: 3%;
+          width: 80%;
+        }
+      }
       @media screen and (max-width: 768px) {
         .nav-menu {
           position: fixed;
@@ -388,17 +394,15 @@
           margin: 0;
           width: 100%;
         }
-        .home-img{
-            position: initial;
-            width: 100%;
+        .home-img {
+          position: initial;
+          width: 100%;
         }
-        .home-social{
-            display: none;
+        .home-social {
+          display: none;
         }
-        .l-main{
-            overflow: hidden;
-        }
-       html, body {
+        html,
+        body {
           padding: 0px;
           overflow-y: auto;
           overflow-x: hidden;
