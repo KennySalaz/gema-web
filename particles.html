@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gema - Particles</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        padding: 1rem;
+      }
+
+      nav ul li {
+        margin: 0 1rem;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        transition: all 0.3s ease;
+      }
+
+      nav ul li a:hover {
+        background: #0a1128;
+        color: white;
+      }
+
+      body {
+        background: #000428;
+        background: linear-gradient(to right, #004e92, #000428);
+        padding-top: 80px;
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        position: relative;
+        padding-top: 80px; /* Espacio para el nav */
+      }
+
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        border-radius: 50%;
+      }
+
+      @keyframes particleAnimation {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(var(--moveX), var(--moveY));
+        }
+      }
+      #chat-container {
+        width: 100%;
+        max-width: 800px;
+        height: 95vh;
+        position: relative;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .svg-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.6;
+      }
+      #chat-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
+      }
+
+      /* Wrapper del iframe */
+      .iframe-wrapper {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        right: 0;
+        bottom: -40px;
+        overflow: hidden;
+      }
+
+      /* Estilos del iframe */
+      .did-chat-iframe {
+        position: absolute;
+        top: -20px;
+        left: 0;
+        width: 100%;
+        height: calc(100% + 100px);
+        border: none;
+      }
+
+      /* Header y Footer modernos */
+      .header,
+      .footer {
+        height: 7%;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(8px);
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        font-weight: 500;
+        color: #333;
+      }
+
+      .header {
+        top: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px 20px 0 0;
+      }
+
+      .footer {
+        bottom: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 0 0 20px 20px;
+      }
+
+      @media (max-width: 768px) {
+        #chat-container {
+          height: 80vh;
+          margin: 0;
+        }
+
+        body {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.html">ESTILO 1</a></li>
+        <li><a href="./waves.html">ESTILO 2</a></li>
+        <li><a href="./particles.html">ESTILO 3</a></li>
+        <li><a href="./circuits.html">ESTILO 4</a></li>
+        <li><a href="./example.html">ESTILO 5</a></li>
+      </ul>
+    </nav>
+    <div id="particles-js"></div>
+    <!-- ... Resto del contenido igual ... -->
+    <div id="chat-container" class="fade-in">
+      <div class="header">
+        <p>Header</p>
+      </div>
+      <div class="footer">
+        <p>Footer</p>
+      </div>
+    </div>
+    <script>
+      class DIDChat {
+        constructor(containerId) {
+          this.container = document.getElementById(containerId);
+          this.chatUrl =
+            "https://studio.d-id.com/agents/share?id=agt_iTbRqjnf&utm_source=copy&key=WjI5dloyeGxMVzloZFhSb01ud3hNRGszTnpjek1EVTBPREUxTVRZM05qRTNOalE2ZFRFelptbGFjVzUzWm00ellqUk5SRUZyVVhjeA==";
+          this.iframe = null;
+          this.init();
+        }
+
+        init() {
+          this.createIframe();
+        }
+
+        createIframe() {
+          const wrapper = document.createElement("div");
+          wrapper.className = "iframe-wrapper";
+          this.iframe = document.createElement("iframe");
+          this.iframe.className = "did-chat-iframe fade-in";
+          this.iframe.src = this.chatUrl;
+          this.iframe.allow = "camera;microphone;clipboard-write";
+          this.iframe.title = "D-ID Chat Interface";
+
+          wrapper.appendChild(this.iframe);
+          this.container.appendChild(wrapper);
+        }
+      }
+
+      class ParticleSystem {
+        constructor() {
+          this.container = document.getElementById("particles-js");
+          this.particleCount = 100;
+          this.init();
+        }
+
+        init() {
+          for (let i = 0; i < this.particleCount; i++) {
+            this.createParticle();
+          }
+        }
+
+        createParticle() {
+          const particle = document.createElement("div");
+          particle.className = "particle";
+
+          // Propiedades aleatorias
+          const size = Math.random() * 5 + 2;
+          const initialX = Math.random() * 100;
+          const initialY = Math.random() * 100;
+          const moveX = (Math.random() - 0.5) * 200;
+          const moveY = (Math.random() - 0.5) * 200;
+          const duration = Math.random() * 20 + 10;
+          const delay = Math.random() * -20;
+
+          particle.style.cssText = `
+            width: ${size}px;
+            height: ${size}px;
+            left: ${initialX}%;
+            top: ${initialY}%;
+            background: rgba(255,255,255,${Math.random() * 0.5 + 0.25});
+            animation: particleAnimation ${duration}s infinite linear;
+            animation-delay: ${delay}s;
+            --moveX: ${moveX}px;
+            --moveY: ${moveY}px;
+          `;
+
+          this.container.appendChild(particle);
+
+          // Recrear partícula cuando termine la animación
+          particle.addEventListener("animationend", () => {
+            particle.remove();
+            this.createParticle();
+          });
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        new ParticleSystem();
+        const chat = new DIDChat("chat-container");
+      });
+    </script>
+  </body>
+</html>
