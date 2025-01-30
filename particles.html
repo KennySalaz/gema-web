@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gema - Particles</title>
+    <title>Gema</title>
     <style>
+      /* Estilos generales */
       * {
         margin: 0;
         padding: 0;
@@ -48,17 +49,16 @@
       }
 
       body {
-        background: #000428;
-        background: linear-gradient(to right, #004e92, #000428);
-        padding-top: 80px;
         font-family: Arial, sans-serif;
-        min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding: 20px;
+        background-color: #0a1128;
         position: relative;
-        padding-top: 80px; /* Espacio para el nav */
+        background: linear-gradient(to right, #004e92, #000428);
+        padding-top: 30px; /* Espacio para el nav */
       }
 
       #particles-js {
@@ -86,7 +86,7 @@
       #chat-container {
         width: 100%;
         max-width: 800px;
-        height: 95vh;
+        height: 96vh;
         position: relative;
         overflow: hidden;
         background: rgba(255, 255, 255, 0.9);
@@ -96,15 +96,7 @@
         border: 1px solid rgba(255, 255, 255, 0.18);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
-      .svg-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        opacity: 0.6;
-      }
+
       #chat-container:hover {
         transform: translateY(-5px);
         box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
@@ -112,28 +104,29 @@
 
       /* Wrapper del iframe */
       .iframe-wrapper {
-        position: absolute;
+        /*   position: absolute;
         top: -100px;
         left: 0;
         right: 0;
-        bottom: -40px;
-        overflow: hidden;
+        bottom: -133px;
+        overflow: hidden; */
       }
 
       /* Estilos del iframe */
       .did-chat-iframe {
         position: absolute;
-        top: -20px;
+        top: -5.5%;
         left: 0;
         width: 100%;
-        height: calc(100% + 100px);
+        height: 109%;
+
         border: none;
       }
 
       /* Header y Footer modernos */
       .header,
       .footer {
-        height: 7%;
+        height: 8%;
         width: 100%;
         background: rgba(255, 255, 255, 0.95);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -159,30 +152,153 @@
         border-radius: 0 0 20px 20px;
       }
 
-      @media (max-width: 768px) {
-        #chat-container {
-          height: 80vh;
-          margin: 0;
+      /* Animaciones SVG */
+      @keyframes float {
+        0% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+        100% {
+          transform: translateY(0) rotate(360deg);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.8;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+      }
+
+      .floating-shape {
+        animation: float 15s infinite ease-in-out;
+      }
+
+      .pulsing-shape {
+        animation: pulse 8s infinite ease-in-out;
+      }
+
+      /* Animación de entrada */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .fade-in {
+        animation: fadeIn 0.5s ease-out;
+      }
+      @keyframes morph {
+        0% {
+          d: path(
+            "M60,0 L120,0 L180,60 L180,120 L120,180 L60,180 L0,120 L0,60 Z"
+          );
+        }
+        50% {
+          d: path(
+            "M90,0 L180,30 L150,120 L180,180 L90,150 L30,180 L0,90 L30,30 Z"
+          );
+        }
+        100% {
+          d: path(
+            "M60,0 L120,0 L180,60 L180,120 L120,180 L60,180 L0,120 L0,60 Z"
+          );
+        }
+      }
+
+      @keyframes rotate3D {
+        0% {
+          transform: perspective(500px) rotateX(0deg) rotateY(0deg);
+        }
+        50% {
+          transform: perspective(500px) rotateX(180deg) rotateY(90deg);
+        }
+        100% {
+          transform: perspective(500px) rotateX(360deg) rotateY(0deg);
+        }
+      }
+
+      @keyframes pathDraw {
+        0% {
+          stroke-dashoffset: 1000;
+        }
+        100% {
+          stroke-dashoffset: 0;
+        }
+      }
+
+      .morphing-shape {
+        animation: morph 20s infinite ease-in-out;
+      }
+      .rotating3d-shape {
+        animation: rotate3D 15s infinite ease-in-out;
+      }
+      .drawing-path {
+        stroke-dasharray: 1000;
+        animation: pathDraw 8s infinite linear;
+      }
+
+      @media (max-width: 980px) {
+        .iframe-wrapper {
+          top: 0;
+          bottom: 0;
         }
 
+        #chat-container {
+          height: 92vh;
+          margin: 0;
+          margin-top: 10px;
+        }
+      }
+      /* Media queries */
+      @media (max-width: 768px) {
         body {
           padding: 10px;
         }
+        .did-chat-iframe {
+          height: 100%;
+          top: 0;
+        }
+        .header,
+        .footer {
+          display: none;
+        }
+      }
+      @media (max-width: 680px) {
+        /*   .did-chat-iframe {
+          height: 100%;
+          top: 0;
+        } */
       }
     </style>
   </head>
+
   <body>
     <nav>
       <ul>
         <li><a href="index.html">ESTILO 1</a></li>
         <li><a href="./waves.html">ESTILO 2</a></li>
         <li><a href="./particles.html">ESTILO 3</a></li>
-        <li><a href="./circuits.html">ESTILO 4</a></li>
-        <li><a href="./example.html">ESTILO 5</a></li>
+        <li><a href="./example.html">ESTILO 4</a></li>
       </ul>
     </nav>
     <div id="particles-js"></div>
-    <!-- ... Resto del contenido igual ... -->
+
     <div id="chat-container" class="fade-in">
       <div class="header">
         <p>Header</p>
@@ -191,6 +307,7 @@
         <p>Footer</p>
       </div>
     </div>
+
     <script>
       class DIDChat {
         constructor(containerId) {
