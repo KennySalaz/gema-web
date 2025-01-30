@@ -10,7 +10,6 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        overflow: hidden;
       }
 
       nav {
@@ -55,9 +54,8 @@
         flex-direction: column;
         align-items: center;
         padding: 20px;
-        background-color: #0a1128;
         position: relative;
-        background: linear-gradient(to right, #004e92, #000428);
+        background-color: #ffffff;
         padding-top: 30px; /* Espacio para el nav */
       }
 
@@ -102,20 +100,168 @@
         box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.45);
       }
 
-      /* Wrapper del iframe */
-      .iframe-wrapper {
-        /*   position: absolute;
-        top: -100px;
+      .box {
+        position: fixed;
+        top: 0;
+        transform: rotate(80deg);
         left: 0;
+      }
+
+      .wave {
+        position: fixed;
+        top: 0;
+        left: 0;
+        opacity: 0.4;
+        position: absolute;
+        top: 3%;
+        left: 10%;
+        background: #0af;
+        width: 1500px;
+        height: 1300px;
+        margin-left: -150px;
+        margin-top: -250px;
+        transform-origin: 50% 48%;
+        border-radius: 43%;
+        animation: drift 12000ms infinite linear;
+      }
+
+      .wave.-three {
+        animation: drift 20000ms infinite linear;
+        position: fixed;
+        background-color: #77daff;
+      }
+
+      .wave.-two {
+        animation: drift 10000ms infinite linear;
+        opacity: 0.1;
+        background: black;
+        position: fixed;
+      }
+
+      .box:after {
+        content: "";
+        display: block;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 11;
+        transform: translate3d(0, 0, 0);
+      }
+
+      @keyframes drift {
+        from {
+          transform: rotate(0deg);
+        }
+        from {
+          transform: rotate(360deg);
+        }
+      }
+
+      /*LOADING SPACE*/
+
+      .contain {
+        animation-delay: 4s;
+        z-index: 1000;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
         right: 0;
-        bottom: -133px;
-        overflow: hidden; */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-flow: row nowrap;
+        flex-flow: row nowrap;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+
+        background: #25a7d7;
+        background: -webkit-linear-gradient(#25a7d7, #2962ff);
+        background: linear-gradient(#25a7d7, #25a7d7);
+      }
+
+      .icon {
+        width: 100px;
+        height: 100px;
+        margin: 0 5px;
+      }
+
+      /*Animation*/
+      .icon:nth-child(2) img {
+        -webkit-animation-delay: 0.2s;
+        animation-delay: 0.2s;
+      }
+      .icon:nth-child(3) img {
+        -webkit-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+      }
+      .icon:nth-child(4) img {
+        -webkit-animation-delay: 0.4s;
+        animation-delay: 0.4s;
+      }
+
+      .icon img {
+        -webkit-animation: anim 2s ease infinite;
+        animation: anim 2s ease infinite;
+        -webkit-transform: scale(0, 0) rotateZ(180deg);
+        transform: scale(0, 0) rotateZ(180deg);
+      }
+
+      @-webkit-keyframes anim {
+        0% {
+          -webkit-transform: scale(0, 0) rotateZ(-90deg);
+          transform: scale(0, 0) rotateZ(-90deg);
+          opacity: 0;
+        }
+        30% {
+          -webkit-transform: scale(1, 1) rotateZ(0deg);
+          transform: scale(1, 1) rotateZ(0deg);
+          opacity: 1;
+        }
+        50% {
+          -webkit-transform: scale(1, 1) rotateZ(0deg);
+          transform: scale(1, 1) rotateZ(0deg);
+          opacity: 1;
+        }
+        80% {
+          -webkit-transform: scale(0, 0) rotateZ(90deg);
+          transform: scale(0, 0) rotateZ(90deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes anim {
+        0% {
+          -webkit-transform: scale(0, 0) rotateZ(-90deg);
+          transform: scale(0, 0) rotateZ(-90deg);
+          opacity: 0;
+        }
+        30% {
+          -webkit-transform: scale(1, 1) rotateZ(0deg);
+          transform: scale(1, 1) rotateZ(0deg);
+          opacity: 1;
+        }
+        50% {
+          -webkit-transform: scale(1, 1) rotateZ(0deg);
+          transform: scale(1, 1) rotateZ(0deg);
+          opacity: 1;
+        }
+        80% {
+          -webkit-transform: scale(0, 0) rotateZ(90deg);
+          transform: scale(0, 0) rotateZ(90deg);
+          opacity: 0;
+        }
       }
 
       /* Estilos del iframe */
       .did-chat-iframe {
         position: absolute;
-        top: -5.5%;
+        top: -4.5%;
         left: 0;
         width: 100%;
         height: 109%;
@@ -124,9 +270,14 @@
       }
 
       /* Header y Footer modernos */
+      .header {
+        height: 8%;
+      }
+      .footer {
+        height: 7%;
+      }
       .header,
       .footer {
-        height: 8%;
         width: 100%;
         background: rgba(255, 255, 255, 0.95);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -278,6 +429,9 @@
         .footer {
           display: none;
         }
+        .box{
+          display: none;
+        }
       }
       @media (max-width: 680px) {
         /*   .did-chat-iframe {
@@ -297,7 +451,19 @@
         <li><a href="./example.html">ESTILO 4</a></li>
       </ul>
     </nav>
-    <div id="particles-js"></div>
+    <!--  <div id="particles-js"></div> -->
+    <div class="box">
+      <div class="wave -one"></div>
+      <div class="wave -two"></div>
+      <div class="wave -three"></div>
+    </div>
+    <div class="box" style="    right: -62%;
+    bottom: 0;
+    transform: rotate(177deg);">
+      <div class="wave -one"></div>
+      <div class="wave -two"></div>
+      <div class="wave -three"></div>
+    </div>
 
     <div id="chat-container" class="fade-in">
       <div class="header">
@@ -336,56 +502,8 @@
         }
       }
 
-      class ParticleSystem {
-        constructor() {
-          this.container = document.getElementById("particles-js");
-          this.particleCount = 100;
-          this.init();
-        }
-
-        init() {
-          for (let i = 0; i < this.particleCount; i++) {
-            this.createParticle();
-          }
-        }
-
-        createParticle() {
-          const particle = document.createElement("div");
-          particle.className = "particle";
-
-          // Propiedades aleatorias
-          const size = Math.random() * 5 + 2;
-          const initialX = Math.random() * 100;
-          const initialY = Math.random() * 100;
-          const moveX = (Math.random() - 0.5) * 200;
-          const moveY = (Math.random() - 0.5) * 200;
-          const duration = Math.random() * 20 + 10;
-          const delay = Math.random() * -20;
-
-          particle.style.cssText = `
-            width: ${size}px;
-            height: ${size}px;
-            left: ${initialX}%;
-            top: ${initialY}%;
-            background: rgba(255,255,255,${Math.random() * 0.5 + 0.25});
-            animation: particleAnimation ${duration}s infinite linear;
-            animation-delay: ${delay}s;
-            --moveX: ${moveX}px;
-            --moveY: ${moveY}px;
-          `;
-
-          this.container.appendChild(particle);
-
-          // Recrear partícula cuando termine la animación
-          particle.addEventListener("animationend", () => {
-            particle.remove();
-            this.createParticle();
-          });
-        }
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        new ParticleSystem();
+   document.addEventListener("DOMContentLoaded", () => {
+       
         const chat = new DIDChat("chat-container");
       });
     </script>
