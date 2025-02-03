@@ -4,76 +4,54 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gema</title>
+    <link rel="shortcut icon" href="./chat.png" />
+    <link rel="stylesheet" href="style.css" />
     <style>
-      /* Estilos generales */
-      * {
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+      :root {
+        --first-color: #1f65c2;
+        --black-color: #000;
+        --white-color: #fff;
+
+        --body-font: "Poppins", sans-serif;
+        --h1-font-size: 2.5rem;
+        --h2-font-size: 1rem;
+        --normal-font-size: 0.93rem;
+        --small-font-size: 0.81rem;
+
+        --z-back: -10;
+        --z-normal: 1;
+        --z-tooltip: 10;
+        --z-fixed: 100;
+        --z-modal: 1000;
+
+        --header-height: 3rem;
+        --font-bold: 700;
+      }
+
+      *,
+      ::before,
+      ::after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        overflow: hidden;
-      }
-
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(8px);
-        z-index: 1000;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-      nav ul {
-        display: flex;
-        justify-content: center;
-        list-style: none;
-        padding: 1rem;
-      }
-
-      nav ul li {
-        margin: 0 1rem;
-      }
-
-      nav ul li a {
         text-decoration: none;
-        color: #333;
-        font-weight: 500;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-      }
-
-      nav ul li a:hover {
-        background: #0a1128;
-        color: white;
+        list-style: none;
       }
 
       body {
-        font-family: Arial, sans-serif;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 20px;
-        background-color: #0a1128;
-        position: relative;
-        padding-top: 30px; /* Espacio para el nav */
+        /* margin: var(--header-height) 0 0 0; */
+        font-family: var(--body-font);
+        background-color: var(--black-color);
+        color: var(--white-color);
+        font-weight: var(--font-bold);
+        overflow: hidden;
       }
-
-      .svg-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        opacity: 0.6;
-      }
-
       #chat-container {
-        width: 100%;
+        width: 60%;
         max-width: 800px;
-        height: 96vh;
+        height: calc(90vh - 60px);
         position: relative;
         overflow: hidden;
         background: rgba(255, 255, 255, 0.9);
@@ -91,31 +69,147 @@
 
       /* Wrapper del iframe */
       .iframe-wrapper {
-      /*   position: absolute;
-        top: -100px;
+        position: absolute;
+        top: 0;
         left: 0;
         right: 0;
-        bottom: -133px;
-        overflow: hidden; */
+        bottom: 0;
+        overflow: hidden;
+        width: 100%;
       }
 
       /* Estilos del iframe */
       .did-chat-iframe {
         position: absolute;
-        top:-4.5%;
+        top: 0;
         left: 0;
         width: 100%;
-          height: 109%;
-
+        height: 100%;
         border: none;
       }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
 
+      .bd-grid {
+        max-width: 1200px;
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+
+      .l-header {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: var(--z-fixed);
+        background-color: var(--black-color);
+      }
+
+      /*NAV*/
+
+      .nav {
+        height: var(--header-height);
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        font-weight: var(--font-bold);
+      }
+
+      .nav-list {
+        text-align: center;
+      }
+      .nav-item {
+        margin-bottom: 2rem;
+      }
+      .nav-link {
+        color: var(--white-color);
+      }
+      .nav-link:hover {
+        position: relative;
+      }
+
+      .nav-link:hover::after {
+        position: absolute;
+        content: "";
+        width: 1.5rem;
+        height: 0.1875rem;
+        left: 0.125rem;
+        top: 2.125rem;
+        background-color: var(--first-color);
+      }
+
+      .nav-logo {
+        font-size: var(--normal-font-size);
+        color: var(--white-color);
+      }
+
+      .nav-logo span {
+        color: blue;
+      }
+
+      .nav-toggle {
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+
+      .l-main {
+        height: calc(100vh - var(--header-height));
+        background-color: var(--black-color);
+      }
+
+      /*HOME*/
+
+      .home {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: max-content max-content;
+        align-content: space-around;
+        row-gap: 0rem;
+        height: 100%;
+        font-weight: var(--font-bold);
+      }
+
+      .home-information {
+        padding-left: 1.5rem;
+        border-left: 5px solid var(--white-color);
+        z-index: var(--z-tooltip);
+      }
+
+      .home-pressent {
+        font-size: var(--small-font-size);
+      }
+      .home-title {
+        font-size: var(--h1-font-size);
+      }
+      .home-skill {
+        font-size: var(--h2-font-size);
+      }
+
+      .home-button {
+        display: inline-block;
+        margin-top: 1.5rem;
+        font-size: 0.75rem;
+        color: var(--white-color);
+        padding: 0.625rem 1rem;
+        border-radius: 0.25rem;
+        background-image: linear-gradient(
+          to right,
+          var(--black-color),
+          var(--first-color)
+        );
+      }
       /* Header y Footer modernos */
-      .header{  height: 8%;}
-      .footer {  height: 7%;}
       .header,
       .footer {
-      
+        height: 7%;
         width: 100%;
         background: rgba(255, 255, 255, 0.95);
         box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -141,351 +235,240 @@
         border-radius: 0 0 20px 20px;
       }
 
-      /* Animaciones SVG */
-      @keyframes float {
-        0% {
-          transform: translateY(0) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-20px) rotate(180deg);
-        }
-        100% {
-          transform: translateY(0) rotate(360deg);
-        }
+      .home-img {
+        position: absolute;
+        right: 20%;
+        bottom: 80px;
+        width: 50%;
+        z-index: var(--z-normal);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
       }
 
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-          opacity: 0.5;
-        }
-        50% {
-          transform: scale(1.1);
-          opacity: 0.8;
-        }
-        100% {
-          transform: scale(1);
-          opacity: 0.5;
-        }
+      .home-social {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 1rem;
       }
 
-      .floating-shape {
-        animation: float 15s infinite ease-in-out;
+      .home-social-icon {
+        margin-bottom: 2rem;
+        font-size: 1.33rem;
+        cursor: pointer;
+        transition: 0.5s;
       }
 
-      .pulsing-shape {
-        animation: pulse 8s infinite ease-in-out;
+      .home-social-icon:hover {
+        color: var(--first-color);
       }
 
-      /* Animación de entrada */
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: var(--z-modal);
+      }
+
+      .first {
+        background-color: var(--first-color);
+      }
+
+      .second {
+        background-color: var(--first-color);
+        left: 33.3%;
+      }
+
+      .third {
+        background-color: var(--first-color);
+        left: 66.6%;
+      }
+
+      @media screen and (max-width: 1200px) {
+        .home-img {
+          right: 3%;
+          width: 80%;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
       }
-
-      .fade-in {
-        animation: fadeIn 0.5s ease-out;
-      }
-      @keyframes morph {
-        0% {
-          d: path(
-            "M60,0 L120,0 L180,60 L180,120 L120,180 L60,180 L0,120 L0,60 Z"
+      @media screen and (max-width: 768px) {
+        .nav-menu {
+          position: fixed;
+          top: -100%;
+          left: 0;
+          background-image: -webkit-gradient(
+            linear,
+            left top,
+            left bottom,
+            from(var(--black-color)),
+            to(var(--first-color))
           );
-        }
-        50% {
-          d: path(
-            "M90,0 L180,30 L150,120 L180,180 L90,150 L30,180 L0,90 L30,30 Z"
+          background-image: linear-gradient(
+            var(--black-color),
+            var(--first-color)
           );
+          width: 100%;
+          height: 35%;
+          padding: 1.5rem;
+          border-radius: 0 0 1rem 1rem;
+          transition: 0.5s;
         }
-        100% {
-          d: path(
-            "M60,0 L120,0 L180,60 L180,120 L120,180 L60,180 L0,120 L0,60 Z"
-          );
+
+        .show {
+          top: var(--header-height);
         }
       }
 
-      @keyframes rotate3D {
-        0% {
-          transform: perspective(500px) rotateX(0deg) rotateY(0deg);
+      @media screen and (min-width: 768px) {
+        :root {
+          --h1-font-size: 4.5rem;
+          --h2-font-size: 2rem;
+          --normal-font-size: 1rem;
+          --small-font-size: 1.37rem;
         }
-        50% {
-          transform: perspective(500px) rotateX(180deg) rotateY(90deg);
-        }
-        100% {
-          transform: perspective(500px) rotateX(360deg) rotateY(0deg);
-        }
-      }
 
-      @keyframes pathDraw {
-        0% {
-          stroke-dashoffset: 1000;
-        }
-        100% {
-          stroke-dashoffset: 0;
-        }
-      }
-
-      .morphing-shape {
-        animation: morph 20s infinite ease-in-out;
-      }
-      .rotating3d-shape {
-        animation: rotate3D 15s infinite ease-in-out;
-      }
-      .drawing-path {
-        stroke-dasharray: 1000;
-        animation: pathDraw 8s infinite linear;
-      }
-   
-      @media (max-width: 980px) {
-        .iframe-wrapper {
-          top: 0;
-          bottom: 0;
-        }
-       
-        #chat-container {
-          height: 92vh;
-          margin: 0;
-          margin-top: 10px;
-        }
-       
-     
-      }
-      /* Media queries */
-      @media (max-width: 768px) {
         body {
-          padding: 10px;
+          margin: 0;
         }
-        .did-chat-iframe {
-          height: 100%;
-          top: 0;
+        .l-main {
+          height: 100vh;
         }
-        .header,
-        .footer {
+
+        .nav {
+          height: var(--header-height) + 1rem;
+        }
+
+        .nav.bd-grid {
+          padding: 1rem;
+        }
+
+        .nav-list {
+          display: flex;
+          padding-top: 0;
+        }
+
+        .nav-item {
+          margin-left: 3rem;
+          margin-bottom: 0;
+        }
+
+        .nav-toggle {
           display: none;
         }
-        
-      }
-      @media (max-width: 680px) {
-      /*   .did-chat-iframe {
-          height: 100%;
-          top: 0;
+
+        .home {
+          grid-template-rows: max-content 20px;
+          align-content: center;
+        }
+
+        .home-information {
+          margin-top: 2rem;
+        }
+        .home-social {
+          flex-direction: row;
+          padding-top: 8rem;
+          padding-bottom: 0;
+        }
+
+        .home-social-icon {
+          margin-right: 2rem;
+          margin-bottom: 0;
+        }
+
+        /*   .home-img {
+          width: 553px;
+          right: 5%;
         } */
-       
+      }
+
+      @media screen and (min-width: 1200px) {
+        .bd-grid {
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+      @media (max-width: 768px) {
+        #chat-container {
+          height: 80vh;
+          margin: 0;
+          width: 100%;
+        }
+        .home-img {
+          position: initial;
+          width: 100%;
+        }
+        .home-social {
+          display: none;
+        }
+        html,
+        body {
+          padding: 0px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          margin-top: 5px;
+        }
       }
     </style>
   </head>
-
   <body>
-    <nav>
-      <ul>
-        <li><a href="index.html">ESTILO 1</a></li>
-        <li><a href="./waves.html">ESTILO 2</a></li>
-        <li><a href="./particles.html">ESTILO 3</a></li>
-        <li><a href="./example.html">ESTILO 4</a></li>
-      </ul>
-    </nav>
-    <div class="svg-background">
-      <svg
-        width="100%"
-        height="100%"
-        viewBox="0 0 1000 1000"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <!-- Grupo 1: Formas geométricas complejas -->
-        <g class="floating-shape" opacity="0.2">
-          <path d="M100,100 L150,50 L200,100 L150,150 Z" fill="#4CAF50" />
-          <path
-            d="M250,100 C300,50 350,50 400,100 S450,150 500,100"
-            fill="none"
-            stroke="#2196F3"
-            stroke-width="3"
-          />
-          <rect
-            x="300"
-            y="150"
-            width="100"
-            height="100"
-            rx="20"
-            fill="#9C27B0"
-          />
-        </g>
-
-        <!-- Grupo 2: Patrones modulares -->
-        <g class="orbiting-shape" opacity="0.15">
-          <path
-            d="M600,200 L650,200 L675,241.4 L650,282.8 L600,282.8 L575,241.4 Z"
-            fill="#FF4081"
-          />
-          <path
-            d="M700,250 L750,250 L775,291.4 L750,332.8 L700,332.8 L675,291.4 Z"
-            fill="#7C4DFF"
-          />
-        </g>
-
-        <!-- Grupo 3: Formas ondulantes abstractas -->
-        <g class="waving-shape" opacity="0.2">
-          <path
-            d="M100,400 Q200,350 300,400 T500,400"
-            fill="none"
-            stroke="#64FFDA"
-            stroke-width="4"
-            class="drawing-path"
-          />
-          <path
-            d="M150,450 Q250,500 350,450 T550,450"
-            fill="none"
-            stroke="#69F0AE"
-            stroke-width="3"
-            class="drawing-path"
-          />
-          <path
-            d="M200,500 Q300,450 400,500 T600,500"
-            fill="none"
-            stroke="#B2FF59"
-            stroke-width="2"
-            class="drawing-path"
-          />
-        </g>
-
-        <!-- Grupo 4: Módulos geométricos -->
-        <g class="bouncing-shape" opacity="0.25">
-          <path d="M700,500 L750,450 L800,500 L750,550 Z" fill="#FFD740" />
-          <rect
-            x="650"
-            y="450"
-            width="50"
-            height="50"
-            transform="rotate(45 675 475)"
-            fill="#FFAB40"
-          />
-          <circle cx="725" cy="525" r="15" fill="#FF6E40" />
-        </g>
-
-        <!-- Grupo 5: Composición abstracta -->
-        <g class="spiral-shape" opacity="0.2">
-          <path
-            d="M400,600 Q450,550 500,600 T600,600"
-            fill="none"
-            stroke="#EA80FC"
-            stroke-width="5"
-          />
-          <rect
-            x="425"
-            y="625"
-            width="150"
-            height="30"
-            rx="15"
-            fill="#B388FF"
-          />
-          <circle cx="500" cy="600" r="25" fill="#EA80FC" />
-        </g>
-
-        <!-- Grupo 6: Formas poligonales -->
-        <g class="pulsing-shape" opacity="0.2">
-          <path d="M200,700 L250,650 L300,700 L250,750 Z" fill="#00BCD4" />
-          <path d="M350,700 L400,675 L450,700 L400,725 Z" fill="#1DE9B6" />
-          <rect
-            x="250"
-            y="675"
-            width="50"
-            height="50"
-            transform="rotate(30 275 700)"
-            fill="#00BCD4"
-          />
-        </g>
-
-        <!-- Grupo 7: Líneas y conexiones -->
-        <g class="waving-shape" opacity="0.1">
-          <path
-            d="M100,800 C200,750 300,850 400,800"
-            stroke="#4CAF50"
-            stroke-width="3"
-            fill="none"
-            class="drawing-path"
-          />
-          <path
-            d="M400,850 C500,800 600,900 700,850"
-            stroke="#00BCD4"
-            stroke-width="3"
-            fill="none"
-            class="drawing-path"
-          />
-          <path
-            d="M300,900 C400,850 500,950 600,900"
-            stroke="#FF4081"
-            stroke-width="3"
-            fill="none"
-            class="drawing-path"
-          />
-        </g>
-
-        <!-- Grupo 8: Formas fractales simples -->
-        <g class="rotating3d-shape" opacity="0.15">
-          <path d="M800,300 L850,250 L900,300 L850,350 Z" fill="#FFA000" />
-          <path d="M825,275 L850,250 L875,275 L850,300 Z" fill="#FFB300" />
-          <path d="M850,325 L875,300 L900,325 L875,350 Z" fill="#FFC107" />
-        </g>
-
-        <!-- Grupo 9: Patrones modulares repetitivos -->
-        <g class="floating-shape" opacity="0.2" style="animation-delay: -7s">
-          <rect
-            x="700"
-            y="600"
-            width="40"
-            height="40"
-            transform="rotate(45 720 620)"
-            fill="#FF9800"
-          />
-          <rect
-            x="750"
-            y="600"
-            width="40"
-            height="40"
-            transform="rotate(45 770 620)"
-            fill="#FF5722"
-          />
-          <rect
-            x="800"
-            y="600"
-            width="40"
-            height="40"
-            transform="rotate(45 820 620)"
-            fill="#FF3D00"
-          />
-        </g>
-
-        <!-- Grupo 10: Formas orgánicas abstractas -->
-        <g class="morphing-shape" opacity="0.25">
-          <path
-            d="M850,750 C900,700 950,700 950,750 S900,800 850,750"
-            fill="#7C4DFF"
-          />
-          <path
-            d="M800,800 C850,750 900,750 900,800 S850,850 800,800"
-            fill="#651FFF"
-          />
-        </g>
-      </svg>
-    </div>
-
-    <div id="chat-container" class="fade-in">
-      <div class="header">
-        <p>Header</p>
+    <div class="overlay first"></div>
+    <div class="overlay second"></div>
+    <div class="overlay third"></div>
+    <main class="l-main bd-grid">
+      <div class="home">
+        <div class="home-information">
+          <span class="home-pressent anime-text">Mi nombre es</span>
+          <h1 class="home-title anime-text">Gema.</h1>
+        </div>
+        <div class="home-img">
+          <div id="chat-container" class="fade-in"></div>
+        </div>
       </div>
-      <div class="footer">
-        <p>Footer</p>
-      </div>
-    </div>
-
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="main.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+    ></script>
     <script>
-      const _0x3f2a=['createElement','iframe-wrapper','did-chat-iframe','fade-in','src','allow','camera;microphone;clipboard-write','title','D-ID Chat Interface','appendChild'];function _0x1f3a(_0x3f2a2d,_0x1f3a2d){_0x3f2a2d=_0x3f2a2d-0x0;let _0x1f3a3d=_0x3f2a[_0x3f2a2d];return _0x1f3a3d;}class DIDChat{constructor(_0x1f3a2d){this['container']=document['getElementById'](_0x1f3a2d),this['chatUrl']='https://studio.d-id.com/agents/share?id=agt_iTbRqjnf&utm_source=copy&key=WjI5dloyeGxMVzloZFhSb01ud3hNRGszTnpjek1EVTBPREUxTVRZM05qRTNOalE2ZFRFelptbGFjVzUzWm00ellqUk5SRUZyVVhjeA==',this['iframe']=null,this['init']();}init(){this['createIframe']();}createIframe(){const _0x1f3a2d=document[_0x1f3a('0x0')]('div');_0x1f3a2d['className']=_0x1f3a('0x1'),this['iframe']=document[_0x1f3a('0x0')]('iframe'),this['iframe']['className']=_0x1f3a('0x2')+' '+_0x1f3a('0x3'),this['iframe'][_0x1f3a('0x4')]=this['chatUrl'],this['iframe'][_0x1f3a('0x5')]=_0x1f3a('0x6'),this['iframe'][_0x1f3a('0x7')]=_0x1f3a('0x8'),_0x1f3a2d[_0x1f3a('0x9')](this['iframe']),this['container'][_0x1f3a('0x9')](_0x1f3a2d);}}document['addEventListener']('DOMContentLoaded',()=>{new DIDChat('chat-container');});
-     /*  class DIDChat {
+      // Deshabilitar clic derecho en la página principal
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+      // Función para deshabilitar combinaciones de teclas (F12, Ctrl+Shift+I, etc.)
+      function ctrlShiftKey(e, keyCode) {
+        return e.ctrlKey && e.shiftKey && e.keyCode === keyCode.charCodeAt(0);
+      }
+
+      document.onkeydown = (e) => {
+        if (
+          event.keyCode === 123 ||
+          ctrlShiftKey(e, "I") ||
+          ctrlShiftKey(e, "J") ||
+          ctrlShiftKey(e, "C") ||
+          (e.ctrlKey && e.keyCode === "U".charCodeAt(0))
+        )
+          return false;
+      };
+
+      const showMenu = (toggleId, navId) => {
+        const toggle = document.getElementById(toggleId),
+          nav = document.getElementById(navId);
+
+        if (toggle && nav) {
+          toggle.addEventListener("click", () => {
+            nav.classList.toggle("show");
+          });
+        }
+      };
+
+      showMenu("nav-toggle", "nav-menu");
+      class DIDChat {
         constructor(containerId) {
           this.container = document.getElementById(containerId);
           this.chatUrl =
@@ -514,7 +497,64 @@
 
       document.addEventListener("DOMContentLoaded", () => {
         const chat = new DIDChat("chat-container");
-      }); */
+      });
+      gsap.to(".first", 1.5, {
+        delay: 0.5,
+        top: "-100%",
+        ease: Expo.easeInOut,
+      });
+      gsap.to(".second", 1.5, {
+        delay: 0.7,
+        top: "-100%",
+        ease: Expo.easeInOut,
+      });
+      gsap.to(".third", 1.5, {
+        delay: 0.9,
+        top: "-100%",
+        ease: Expo.easeInOut,
+      });
+
+      gsap.from(".home-img", { opacity: 0, duration: 2, delay: 2, x: 60 });
+
+      gsap.from(".home-information", {
+        opacity: 0,
+        duration: 3,
+        delay: 2.3,
+        y: 25,
+      });
+      gsap.from(".anime-text", {
+        opacity: 0,
+        duration: 3,
+        delay: 2.3,
+        y: 25,
+        ease: "expo.out",
+        stagger: 0.3,
+      });
+
+      gsap.from(".nav-logo", {
+        opacity: 0,
+        duration: 3,
+        delay: 3.2,
+        y: 25,
+        ease: "expo.out",
+      });
+      gsap.from(".nav-item", {
+        opacity: 0,
+        duration: 3,
+        delay: 3.2,
+        y: 25,
+        ease: "expo.out",
+        stagger: 0.2,
+      });
+
+      gsap.from(".home-social", {
+        opacity: 0,
+        duration: 3,
+        delay: 4,
+        y: 25,
+        ease: "expo.out",
+        stagger: 0.2,
+      });
     </script>
   </body>
 </html>
